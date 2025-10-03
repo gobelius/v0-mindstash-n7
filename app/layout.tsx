@@ -1,27 +1,26 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { GeistSans } from "geist/font/sans"
-import { GeistMono } from "geist/font/mono"
-import { Analytics } from "@vercel/analytics/next"
-import { Suspense } from "react"
-import "./globals.css"
+import { ThemeProvider } from "@/components/theme-provider"
+import "@/src/index.css"
+import "@/src/globals.css"
 
 export const metadata: Metadata = {
-  title: "Mindstash - Capture Your Thoughts",
-  description: "A knowledge management app for capturing and organizing your thoughts",
-  generator: "v0.app",
+  title: "Mindstash",
+  description: "Your personal knowledge management system",
+    generator: 'v0.app'
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
-    <html lang="en" className="dark">
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        <Suspense fallback={null}>{children}</Suspense>
-        <Analytics />
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )
